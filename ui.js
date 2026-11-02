@@ -11,12 +11,13 @@ function modal(contestId, today) {
     id,
     placeholder,
     max,
-    value
+    value,
+    required = true
   ) => ({
     type: 4,
     custom_id: id,
     style: 1,
-    required: true,
+    required,
     max_length: max,
     placeholder,
     ...(value ? { value } : {})
@@ -56,11 +57,6 @@ function modal(contestId, today) {
               label: 'Musculation',
               value: 'strength',
               emoji: { name: '🏋️' }
-            },
-            {
-              label: 'Football',
-              value: 'football',
-              emoji: { name: '⚽' }
             }
           ]
         }
@@ -86,11 +82,13 @@ function modal(contestId, today) {
       ),
 
       label(
-        'Lien complet de l’activité Strava',
+        'Lien Strava (facultatif)',
         text(
           'link',
-          'https://www.strava.com/activities/123456789',
-          300
+          'Tu peux laisser vide',
+          300,
+          undefined,
+          false
         )
       ),
 
@@ -124,9 +122,7 @@ function parseQuantity(value) {
   const input = value.trim()
     .replace(',', '.');
 
-  if (
-    !/^\d+(\.\d+)?$/.test(input)
-  ) {
+  if (!/^\d+(\.\d+)?$/.test(input)) {
     throw Error(
       'Écris uniquement le nombre : ' +
       '5,2 pour 5,2 km ou 45 pour 45 minutes.'
